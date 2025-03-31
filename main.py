@@ -25,8 +25,14 @@ with open((rf"{path}/transforms.json"), "r") as file:
     
     
 W, H ,focalLength = data.get("w"), data.get("h"), data.get("fl_x")
+W = 50
+H = 50
 origins = poses[:,:-3]
 camera_vector = poses[1,3:]
 
 originrays, dirrays  = HelperFunctions.generateRays(1, 10,poses, origins[1], H, W, focalLength,c2w[1])
-HelperFunctions.plot_rays(originrays, dirrays,10,10)
+pts = HelperFunctions.samplePoints(originrays, dirrays, numPoints=20, tn=1, tf=20)
+
+#HelperFunctions.plot_rays(originrays, dirrays,10,10)
+#HelperFunctions.plot_ray(pts, 2)
+HelperFunctions.plot_rays_and_points(originrays, dirrays, pts)
